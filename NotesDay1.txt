@@ -1,0 +1,82 @@
+JDBC: Java Database Connectivity (for understanding any concept we musta ask three questions two ourselfes WHAT?, WHY?, HOW?)
+------------------------------------------------------------
+WHAT:->
+------------------------------------------------------------
+Definition:
+1) JDBC is an API, which defines several classes and interfaces which can be used for a database communication.
+2) JDBC is an API (packages:java.sql|javax.sql) for connecting to database and perform CRUD operation.
+3) JDBC is an API that helps applications to communicate with databases, it allows Java programs to connect to a database, run queries, retrieve, and manipulate data.
+
+------------------------------------------------------------
+WHY:->
+------------------------------------------------------------
+1)JDBC allows developers to build java applications which are PLATFORM INDEPENDENT + DATABASE INDEPENDENT(PARTIALLY).(WORA)
+2)It offers a natural Java interface for working with SQL.
+3)JDBC supports various database operations, including establishing connections, executing queries, and managing transactions.
+
+
+------------------------------------------------------------
+HOW:->
+------------------------------------------------------------
+1)Import Packages.
+2)Register the JDBC Drivers.
+3)Open a Connection to a Database.
+4)Create a Statement Object.
+5)Execute a Query and Return a Result Set Object.
+6)Process the Result Set.
+7)Close the Result Set and Statement Objects.
+
+
+
+------------------------------------------------------------
+         2.1 What Makes JDBC Database Independent?
+------------------------------------------------------------
+
+JDBC (Java Database Connectivity) allows Java apps to work with 
+any database in a consistent way. This database independence is 
+achieved using two layers:
+
+------------------------------------------------------------
+ 1. JDBC API – Defines WHAT to do
+------------------------------------------------------------
+
+• JDBC provides standard interfaces (specifications).
+• Examples: Connection, Statement, PreparedStatement, ResultSet
+• These interfaces define **what** operations are possible.
+
+------------------------------------------------------------
+ 2. JDBC Drivers – Define HOW to do
+------------------------------------------------------------
+
+• DB vendors or third parties implement these interfaces.
+• Implementations are part of JDBC drivers.
+
+Examples:
+| Interface     | Vendor Implementation                  |
+|---------------|----------------------------------------|
+| Connection    | MySqlConnectionImpl, OracleConnImpl    |
+| Statement     | MySqlStatementImpl, etc.               |
+| ResultSet     | Vendor-specific classes                |
+
+------------------------------------------------------------
+ How It Works
+------------------------------------------------------------
+
+• Java app uses JDBC API (interfaces).
+• Driver handles DB-specific details.
+• Switching DB = change driver only → no code change.
+
+------------------------------------------------------------
+ Summary
+------------------------------------------------------------
+
+| Component    | Role                                   |
+|--------------|----------------------------------------|
+| JDBC API     | Defines WHAT (via interfaces)          |
+| JDBC Driver  | Provides HOW (via implementation)      |
+
+ JDBC is DB-independent because the API is fixed and the 
+implementation is provided via pluggable drivers.
+------------------------------------------------------------
+
+
