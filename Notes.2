@@ -1,0 +1,113 @@
+What is Cascading ?
+
+It refers to the ability to automatically propagate the state of an entity  across associations between entities. 
+Hibernate cascading is a powerful feature that simplifies the management of complex E-R within a persistence context. 
+It allows you to automatically propagate certain  operations (like saving, updating, and deleting) to associated entities, reducing the boilerplate  code .
+
+How 
+When you define a relationship between two entities(Category --- BlogPost) and specify a cascade type, 
+Hibernate will automatically perform the specified operation on the related entities when you perform that operation on the parent entity.
+
+Types of Cascading options via CascadeType enum.
+jakarta.persistence.CascadeType : enum 
+Values :  ALL,PERSIST, MERGE, REMOVE, REFRESH, DETACH
+
+  CascadeType.PERSIST:
+   Use case - When you want to persist a new parent entity and its associated child entities in a single transaction. 
+ CascadeType.MERGE:
+   Use Case: When you want to update an existing parent entity and its associated child entities in a single transaction.
+    CascadeType.REMOVE:
+   Use Case: When you want to delete a parent entity and its associated child entities in a single transaction.
+    CascadeType.REFRESH:
+   Use Case: When you want to refresh the state of a parent entity and its associated child entities from the database.
+    CascadeType.ALL:
+   Use Case: When you want to apply all of the above cascade types to the E-R
+ 
+eg - Category 1<--->* BlogPost
+
+To cascade  save , update ,delete operations from Category to BlogPost
+Solution : @OneToMany (mappedBy = "chosenCategory",cascade = CascadeType.ALL)
+private List<BlogPost> posts=new ArrayList<>();
+
+
+
+
+Regarding orphanRemoval
+
+What is orphanRemoval ?
+A boolean property of @OneToMany / @OneToOne annotation.
+default value - false
+
+It states - 
+Whether to apply the remove operation to entities that have been removed from the relationship and to cascade the remove operation to those entities.
+We had already added - cascade=CascadeType.ALL (which includes - REMOVE)
+BUT still it wasn't working.
+
+So after enabling the orphanRemoval=true , after removing the post from the category 
+(using removeBlogPost) , we are telling hibernate to remove the orphan post record .
+Problem : org.hibernate.LazyInitializationException
+
+WHY ?
+
+JPA/Hibernate follows default fetching policies for different types of associations
+one-to-one : EAGER
+one-to-many : LAZY
+many-to-one : EAGER
+many-to-many : LAZY
+
+
+one-to-many : LAZY
+Meaning : If you try to fetch details of one side(eg : Category) , will it fetch auto details of many side(blog posts) ?
+
+NO (i.e select query will be fired only on categories table)
+Why ? : for better performance 
+
+When will hibernate throw org.hibernate.LazyInitializationException ?
+
+Any time you are trying to access un-fetched data from DB(represented by a proxy) , in a detached manner(outside the session scope)
+
+Triggers  : one-to-many
+many-many
+session's load(getReference)  method
+
+Hibernate uses 3rd party support - ByteBuddy JAR , for the genration of dynamic proxies.
+
+un fetched data : i.e blog post  list in  Category obj : represented by : proxy (substitution) : proxy object representing a collection 
+proxy => un fetched data from DB
+
+Solutions
+1. Change the fetching policy of hibernate for one-to-many to : EAGER
+eg : 
+@OneToMany(mappedBy = "chosenCategory",cascade = CascadeType.ALL,orphanRemoval=true,fetch=FetchType.EAGER)  
+	private List<BlogPost> posts=new ArrayList<>();
+
+Is it recommneded soln : NO (since even if you just want to access one side details , hibernate will fire query on many side) --will lead to worst performance.
+Use Case : when the size of many is small 
+eg : User 1----* Role
+OR
+2.
+ @OneToMany(mappedBy = "chosenCategory",cascade = CascadeType.ALL)
+	private List<BlogPost> posts=new ArrayList<>();
+Solution : Simply access the size of the collection within session scope :  This soln will be applied in DAO layer
+Dis Adv : Hibernate fires multiple queries to get the complete details
+
+OR 
+3. Most recommended soln to avoid select n+1 issue : 
+How to fetch the complete details , in a single join query ?
+Using "join fetch" keyword in JPQL
+eg Scenario - Restaurant 1----*FoodItem
+String jpql ="select r from Restaurant r join fetch r.foodItems where r.name=:nm"
+foodItems - name of the property in Restaurant Entity.
+
+Hibernate will fire SINGLE INNER JOIN  query to fetch category n blog post  details (not resulting in LazyInitializationException)
+To replace it by left outer join , use 	
+String jpql ="select c from Category c left  join fetch c.blogPosts where c.categoryName=:nm"
+
+
+
+
+
+
+
+
+
