@@ -1,0 +1,262 @@
+How does Spring boot work internally ? 
+OR
+ 
+What exctaly happens when you run a spring boot app ?
+
+Spring Boot looks at 
+1. Frameworks available on the run time CLASSPATH(build path) 
+(eg : web MVC , Spring Data JPA : ORM --default provider Hibernate, Jackson , DBCP : Hikari)
+2. Existing configuration for the application(from application.properties or application.yaml file)
+
+Based on these, Spring Boot provides default configuration needed to configure the application with these frameworks. This is called Auto Configuration.
+
+It uses Spring Boot Starters : 
+Starters are a set of convenient dependency descriptors that you can include in your application's pom.xml
+ - Keeps track of required dependencies
+ - Manages compatible versions
+.
+eg : Suppose you want to develop a web application | RESTful web service
+
+W/o Spring boot ,  we would need to identify the frameworks we want to use, which versions of frameworks to use and how to connect them together.
+
+BUT all web application have similar needs. 
+ These include Spring MVC, Jackson Databind (for data binding) - serialization n de-serialization , Hibernate-Validator (for server side validation using Java Validation API) and Log4j (for logging). Earlier while creating any web app, we had to choose the compatible versions of all these frameworks.
+
+With Spring boot : You just add  Spring Boot Starter Web.
+
+Dependency for Spring Boot Starter Web
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-web</artifactId>
+</dependency>
+
+Just by adding above starter , it will add lot of dependency JARs under maven dependencies
+
+
+Another eg : If  you want to use Spring and JPA for database access, just include the spring-boot-starter-data-jpa dependency in your project, and you are good to go.
+
+Important component of a Spring Boot Application
+
+1. Below is the starting point of a Spring Boot Application
+
+@SpringBootApplication
+public class DemoApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(DemoApplication.class, args);
+	}
+
+}
+About : org.springframework.boot.SpringApplication
+It's a Class  used to bootstrap and launch a Spring application from a Java main method. 
+
+By default it  will perform the following steps to bootstrap the application
+
+0.It launches an embedded Tomcat container.
+1. Creates an ApplicationContext instance (sub i/f : WebApplicationContext  --> implementation class  --> AnnotationConfigWebApplicationContext : representing SC suitable in spring boot managed web scenario) --meaning launches SC from within Spring boot app.
+2. Configures Spring MVC components 
+ - DispatcherServlet, HandlerMapping , ViewResolver(only in case of MVC controller)
+3. Configures Hikari supplied DBCP
+  - configures auto Tx support
+ ...
+4. SC manages life cycle of spring beans
+eg - RestController , Service , Repository(DAO)  ...
+
+Important annotation -
+@SpringBootApplication - This is where all the spring boot magic happens.
+It consists of following 3 annotations.
+
+1. @SpringBootConfiguration (equivalent to @Configuration | bean config xml file)
+It  tells spring boot  that this class is a configuration class which  can have several bean definitions. We can define various spring beans here and those beans will be available at run time .
+(using @Bean method level annotation)
+eg : ModelMapper, PasswordEncoder.AuthenticationManager...
+
+2. @EnableAutoConfiguration
+It tells spring boot to automatically configure the spring application based on the dependencies available on the classpath.
+
+eg:
+If we have a MySql dependency in our pom.xml , Spring Boot will automatically create a data source,using the properties in application.properties file.  
+
+If we have spring web starter , in pom.xml , then spring boot will automatically create the dispatcher servlet n other beans (HandlerMapping , ViewResolver, DispatcherServlet)
+
+All the xml, all the java based configuration is now gone.It all comes for free thanks to spring boot to enable auto configuration annotation. 
+
+3. @ComponentScan (equivalent to xml tag : context:component-scan)
+The value of base-packge is 
+supplied at the spring boot configuration time.
+
+SC by default searches under this base package for spring beans | components .
+
+eg - com.blogs (the name of the package where spring boot main class is created)
+
+
+For scanning entities :  (equivalent to packagesToScan)
+@EntityScan//(basePackages = "com.blogs")
+
+So this  tells us that spring boot to  scan through the classes and see which all classes are marked with the stereotype annotations like @Component Or @Service @Repository and manage  these spring beans . Default base-pkg is the pkg in which main class is defined.
+Can be overridden by
+eg : 
+@ComponentScan(basePackages = "org.example")
+@EntityScan(basePackages ="org.example.model")
+
+	@NotBlank : use it over a string property(non null + non empty)
+	
+	@Email : valid email format
+	private String email;
+	@NotBlank
+	@Pattern(regexp="((?=.*\\d)(?=.*[a-z])(?=.*[#@$*]).{5,20})")
+	private String password;
+	@NotNull : use it over a non string property(non null) to avoid NPExc.
+	@Range(min=200,max=2000) OR @Min and @Max
+	private double regAmt;
+	@NotNull //MUST add @NotNull for non string props to avoid NPExc.
+     @Future //reg date must be from future
+//def date format : yyyy-MM-dd  
+	@DateTimeFormat(pattern="dd-MMM-yyyy") //to customize date time format
+	private LocalDate regDate;
+	
+Spring boot allows easy integration with  testing frameworks : JUnit 5(Jupiter) n Mockito.
+ 
+Regarding Spring Boot Testing (Data Layer)
+
+Spring Boot provides the @DataJpaTest annotation to test the persistence layer components.
+
+It scans the @Entity classes and Spring Data JPA repositories.
+
+Sets the spring.jpa.show-sql property to true and enable the SQL queries logging.
+
+By Default, JPA test data are transactional and roll back at the end of each test; it means we do not need to clean up saved or modified table data after each test.
+
+Replace the application data source, run and configure the embedded database (in memory eg : H2) on run time classpath(build path)
+
+
+By default they will autoconfigure in-memory embedded database for testing purposes.
+eg H2 database | HSQL
+
+But if you don't want to replace your original database by test database ,use
+@AutoConfigureTestDatabase(replace = Replace.NONE)
+
+Since test cases should not modify the state of DB , by default rollback is applied after the execution of test cases.
+
+But , since we wanted to write test cases to insert the recs in emps table , marked 
+@Rollback(false)
+
+@DataJpaTest annotation doesn’t load other Spring beans (@Components, @Controller, @Service, and annotated beans) into ApplicationContext(SC) 
+
+By default, it scans for @Entity classes and configures Spring Data JPA repositories annotated with @Repository annotation.
+
+2. Spring Boot provides 
+2.1 @SpringBootTest for integration testing
+(eg : service +dao + DB)
+
+2.2 Using TestRestTemplate - for conroller + service +dao + DB
+end - to -end testing
+
+
+1.Objective  Add P.L(presentation logic) Validations supplied in back end
+
+Steps
+1.1 We Have already added , validation dependency starter in Spring boot project.
+(confirm from pom.xml)
+
+1.2  Identify validation rules , add the annotations on POJO(Entity/DTO) properties.
+eg : @NotBlank, @Pattern, @Min, @Max,@NotNull,@Past,@Future.......
+Imported from javax.validation , org.hibernate.validator
+(refer to templates.txt under )
+eg : first name : can't be blank .(min : 4 chars , max =20 chars)
+last name : can't be blank 
+valid email 
+valid strong password (alpha numeric, special character , min 5 max 20)
+eg : ((?=.*\\d)(?=.*[a-z])(?=.*[#@$*]).{5,20})
+reg amount in the range : 500 ---5000
+reg date must be in future
+Test it with postman client
+(Same annotations are used in Spring MVC standalone App , in P.L: presentation logic  validations)
+eg : @NotBlank , @NotNull,@Email, @Pattern,@Future ,@Range,@Min,@Max...
+
+
+1.3 For validating RequestBody : add @Valid annotation in addition to @RequestBody
+SC performs un marshalling + validation
+
+Observation : HTTP status 400 , BUT entire error stack trace sent to clnt.
+Exception : MethodArgumentNotValidException
+
+Is it a desirable ?? NO
+
+
+1.4 For Path Variables/request params : @Validated , at class level on controller class + validation annotations (eg : @NotNull, @Email...) on the method argument
+Exception raised : ConstraintViolationException
+
+2. Any problems observed on the client side ? 
+
+
+YES : Since spring boot supplies a default exception handler , entire stack trace , along with exception details are sent to the front end.
+
+NOTE  :
+1. Validation failures CAN NOT be caught by rest controller method level exc handling using try-catch . It's automatically handled by Spring Boot supplied default exception handler.
+Problem :Complete Error stack trace is sent to the clnt.
+
+2. B.L failures (eg : resource not found , dup email ...) CAN BE caught by controller method level exc handling(try-catch) --> but resulting into repeatative exc handling 
+(i.e multiple try-catch)
+
+Instead : 
+How to avoid both of these problems ?
+Solution : Add centralized ( global) exception handler
+
+Why ?
+A good REST API should handle the exceptions properly and send the proper response to the user. The user(REST Client) should not be rendered with any unhandled exception. A REST API developer will have two requirements related to error handling.
+
+1. Centralized place(class)  for Error handling
+2. Similar Error Response body with a proper HTTP status code across all API endpoints
+
+Steps :
+1. Create a separate class annotated with 
+Class level annotation : 
+@RestControllerAdvice is the combination of both @ControllerAdvice at the class level and @ResponseBody added implicitly over all exc handling  methods.
+
+The @ControllerAdvice annotation was first introduced in Spring 3.2.
+
+We can use the @ControllerAdvice annotation for handling exceptions in the RESTful Services but we need to add @ResponseBody separately.
+
+The differences between @RestControllerAdvice and @ControllerAdvice is :
+
+@RestControllerAdvice = @ControllerAdvice + @ResponseBody. - we can use it in REST web services.
+
+@ControllerAdvice - We can use in both MVC and Rest web services, BUT you need to provide the @ResponseBody if we use this in Restful web services.
+
+
+Steps
+1. Create a separate class annotated with  @RestControllerAdvice
+To tell SC , following class is a common advice to :  rest controllers --regarding exc handling (cross cutting concern=common task)
+
+3. For validation failures , triggered by  @Valid annotation
+Exception to handle : MethodArgumentNotValidException 
+Extract map of Field Errors --send it to the caller(front end) by wrapping it in the RespEntity.
+Exc class : MethodArgNotValidException
+It's super class : BindException has : 
+Method --List<FieldError> getFieldErrors() .
+FieldError class :  getField(): affected field name , getDefaultMessage() : error mesg
+
+eg : @ExceptionHandler(MethodArgumentNotValidException.class)
+public ResponseEntity<?> handleMethodArgumentNotValidException(MethodArgumentNotValidException e)
+{....}
+o.s.http.ResponseEntity : a generic class , that represents ENTIRE response packet
+(containing SC code | header | resp body)
+
+
+
+	
+4. For ResourceNotFoundException  or similar B.L exceptions : 
+Add method in global exc handler annotated with 
+@ExceptionHandler
+
+
+Instead of sending err mesg as a plain string , wrap it in Error response object n send it to the front end for simpler processing
+Use DTO pattern : Data Transfer object
+ApiResponse : message , timestamp
+
+Links : 
+https://www.baeldung.com/java-bean-validation-not-null-empty-blank
+
+
+
