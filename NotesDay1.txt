@@ -9,7 +9,7 @@ Definition:
 
 ------------------------------------------------------------
 WHY:->
-------------------------------------------------------------
+-----------------------------------------------------------
 1)JDBC allows developers to build java applications which are PLATFORM INDEPENDENT + DATABASE INDEPENDENT(PARTIALLY).(WORA)
 2)It offers a natural Java interface for working with SQL.
 3)JDBC supports various database operations, including establishing connections, executing queries, and managing transactions.
