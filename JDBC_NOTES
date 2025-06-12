@@ -1,0 +1,106 @@
+------------------JDBC-------------------------
+
+JDBC:
+
+1)java.util.date contains both date and time. 
+Whereas, java.sql.date contains only date.
+
+2)Since the JDBC connection takes time to establish. 
+Creating connection at the application start-up 
+and reusing at the time of requirement, 
+helps performance of the application.
+
+3) PreparedStatement in Java improves performance 
+and also prevents from SQL injection.
+
+4) java.sql.Time contains only time. 
+Whereas, java.sql.TimeStamp contains both time and date.
+
+5)setAutoCommit(false) does not commit transaction 
+automatically after each query. 
+That saves a lot of time of the execution
+and hence improves performance.
+
+6)setAutoCommit(false) does not commit transaction 
+automatically after each query. 
+That saves a lot of time of the execution and hence improves performance.
+
+7)setMaxRows(int i) method is used to limit the number of rows 
+that the database returns from the query.
+
+8)addBatch() is a method of JDBC batch process. 
+It is faster in processing than executing one statement at a time.
+
+9)rollback() method is used to rollback the transaction. 
+It will rollback all the changes made by the transaction.
+
+10)JDBC connection isolation level.
+TRANSACTION_NONE
+TRANSACTION_READ_COMMITTED
+TRANSACTION_REPEATABLE_READ
+
+11)The Jdbc driver that directly communicates with database protocol is 
+- TYPE IV
+
+12)Which driver can be used for internet purpose?
+-TYPE III
+
+13)? character is used to represent an input parameter in a PreparedStatement
+
+14)Which class gives u connection from connection pool?
+-DataSource
+
+15)Which class gives connection?
+-DriverManager
+
+16)According to JDBC4, driver class name should be there inside 
+-: META-INF\services\java.sql.Driver file 
+
+17)If we use query statement inside “execute()” method of Statement, it will return 
+-TRUE
+
+18)If we use update statement inside “execute()” method of Statement, it will return 
+-FALSE
+
+19)When driver is not found, it results in 
+-CLASSNOTFOUNDEXCEPTION
+
+20)Connection is Interface
+
+21)Name the most suitable execution method in JDBC , for firing DML queries.
+-executeUpadate()
+
+22)How to create PreparedStatement in order to support Scrollable and Read-only ResultSet?
+con.prepareStatement(sql,TYPE_SCROLL_INSENSITIVE,CONCUR_READ_ONLY);
+
+23)6. PreparedStatements are actually _________________
+-: Compiled 
+
+24)Which driver is efficient and always preferable for jdbc applications?
+ -: Type – 4
+
+25)The parameters of PreparedStatement object are ______ when the user clicks on the query button.
+-: Initialized
+
+26)Name of Type4 driver is
+-: Native-Protocol Driver
+
+27)By default ResultSet is
+-TYPE_FORWARD_ONLY
+
+28). PreCompiled SQL statements are stored in
+-PreparedStatement
+
+29)The checked exception which we need to handle in case of jdbc is
+-SQLException
+
+30)Type1 driver makes use of-odbc
+
+31)If ResultSet is Scrollable we can invoke-
+A: Absolute B: Next C: Previous
+
+32). Stored Procedures can be called using - CallableStatement
+
+33)Every driver class has ________ which registers itself with the DriverManager 
+-static block
+
