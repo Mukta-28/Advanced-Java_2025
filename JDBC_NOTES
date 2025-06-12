@@ -104,3 +104,91 @@ A: Absolute B: Next C: Previous
 33)Every driver class has ________ which registers itself with the DriverManager 
 -static block
 
+ADITIONAL
+ 1. DatabaseMetaData & ResultSetMetaData
+Possible MCQs:
+
+Which method is used to get the name of the current database user in JDBC?
+a) getUser()
+b) getUserName() ANS
+c) getCurrentUser()
+d) fetchUser()
+
+What does getColumnCount() of ResultSetMetaData return?
+a) Total rows
+b) Total columns ANS
+c) Column type
+d) Column name
+
+Which of the following is true about DatabaseMetaData?
+a) It belongs to java.sql package ANS
+b) It is used to update ResultSet
+c) It is used for rollback
+d) It manages transactions
+
+ 2. RowSet Interface
+Possible MCQs:
+
+Which RowSet type works in disconnected mode?
+a) JdbcRowSet
+b) CachedRowSet ANS
+c) ConnectedRowSet
+d) SimpleRowSet
+
+Which RowSet supports event listeners and is scrollable/updatable?
+a) ResultSet
+b) JdbcRowSet ANS
+c) Statement
+d) MetaRowSet
+
+What is a key advantage of CachedRowSet?
+a) Requires internet
+b) Supports XML and serialization ANS
+c) Only works with Oracle
+d) Doesn’t support update
+
+ 3. Savepoints
+Possible MCQs:
+
+Which JDBC method sets a savepoint in a transaction?
+a) setPoint()
+b) setAutoCommit(true)
+c) setSavepoint() ANS
+d) commitSave()
+
+What is the main use of Savepoint in JDBC?
+a) Changing auto-commit
+b) Logging
+c) Partial rollback ANS
+d) Pooling connections
+
+ 4. BLOB and CLOB
+Possible MCQs:
+
+BLOB is used to store:
+a) Text data
+b) XML data
+c) Binary data like images ANS
+d) Compressed files only
+
+Which method is used to store large text data?
+a) setText()
+b) setLargeText()
+c) setClob() ANS
+d) setBlob()
+
+5. Connection Pooling Libraries
+Possible MCQs:
+
+Which of these is a high-performance JDBC connection pooling library?
+a) Hibernate
+b) HikariCP ANS
+c) Apache Kafka
+d) Log4J
+
+Which library supports automatic recovery of failed connections?
+a) DBCP
+b) JDBC-ODBC
+c) C3P0 ANS
+d) MongoPool
+
