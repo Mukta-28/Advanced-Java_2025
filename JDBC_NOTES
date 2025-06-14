@@ -22,7 +22,7 @@ That saves a lot of time of the execution
 and hence improves performance.
 
 6)setAutoCommit(false) does not commit transaction 
-automatically after each query. 
+automatically after each query.
 That saves a lot of time of the execution and hence improves performance.
 
 7)setMaxRows(int i) method is used to limit the number of rows 
@@ -191,4 +191,5 @@ a) DBCP
 b) JDBC-ODBC
 c) C3P0 ANS
 d) MongoPool
+
 
