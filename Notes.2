@@ -13,23 +13,21 @@ jakarta.persistence.CascadeType : enum
 Values :  ALL,PERSIST, MERGE, REMOVE, REFRESH, DETACH
 
   CascadeType.PERSIST:
-   Use case - When you want to persist a new parent entity and its associated child entities in a single transaction. 
- CascadeType.MERGE:
-   Use Case: When you want to update an existing parent entity and its associated child entities in a single transaction.
-    CascadeType.REMOVE:
-   Use Case: When you want to delete a parent entity and its associated child entities in a single transaction.
-    CascadeType.REFRESH:
-   Use Case: When you want to refresh the state of a parent entity and its associated child entities from the database.
-    CascadeType.ALL:
-   Use Case: When you want to apply all of the above cascade types to the E-R
+  -> Use case - When you want to persist a new parent entity and its associated child entities in a single transaction. 
+  CascadeType.MERGE:
+  -> Use Case: When you want to update an existing parent entity and its associated child entities in a single transaction.
+  CascadeType.REMOVE:
+  -> Use Case: When you want to delete a parent entity and its associated child entities in a single transaction.
+  CascadeType.REFRESH:
+  ->Use Case: When you want to refresh the state of a parent entity and its associated child entities from the database.
+  CascadeType.ALL:
+  -> Use Case: When you want to apply all of the above cascade types to the E-R
  
 eg - Category 1<--->* BlogPost
 
 To cascade  save , update ,delete operations from Category to BlogPost
 Solution : @OneToMany (mappedBy = "chosenCategory",cascade = CascadeType.ALL)
 private List<BlogPost> posts=new ArrayList<>();
-
-
 
 
 Regarding orphanRemoval
@@ -54,9 +52,8 @@ one-to-one : EAGER
 one-to-many : LAZY
 many-to-one : EAGER
 many-to-many : LAZY
-
-
 one-to-many : LAZY
+
 Meaning : If you try to fetch details of one side(eg : Category) , will it fetch auto details of many side(blog posts) ?
 
 NO (i.e select query will be fired only on categories table)
