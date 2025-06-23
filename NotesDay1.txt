@@ -44,7 +44,7 @@ achieved using two layers:
 • Examples: Connection, Statement, PreparedStatement, ResultSet
 • These interfaces define **what** operations are possible.
 
-------------------------------------------------------------
+--------------------------------------------------------------
  2. JDBC Drivers – Define HOW to do
 ------------------------------------------------------------
 
