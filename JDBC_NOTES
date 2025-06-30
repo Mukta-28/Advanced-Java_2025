@@ -45,7 +45,7 @@ TRANSACTION_REPEATABLE_READ
 12)Which driver can be used for internet purpose?
 -TYPE III
 
-13)? character is used to represent an input parameter in a PreparedStatement
+13) " ? " character is used to represent an input parameter in a PreparedStatement
 
 14)Which class gives u connection from connection pool?
 -DataSource
@@ -65,7 +65,7 @@ TRANSACTION_REPEATABLE_READ
 19)When driver is not found, it results in 
 -CLASSNOTFOUNDEXCEPTION
 
-20)Connection is Interface
+20)Connection is Interface.
 
 21)Name the most suitable execution method in JDBC , for firing DML queries.
 -executeUpadate()
@@ -102,7 +102,7 @@ A: Absolute B: Next C: Previous
 32). Stored Procedures can be called using - CallableStatement
 
 33)Every driver class has ________ which registers itself with the DriverManager 
--static block
+-Static Block
 
 ADITIONAL
  1. DatabaseMetaData & ResultSetMetaData
@@ -113,6 +113,7 @@ a) getUser()
 b) getUserName() ANS
 c) getCurrentUser()
 d) fetchUser()
+--> getUserName()
 
 What does getColumnCount() of ResultSetMetaData return?
 a) Total rows
