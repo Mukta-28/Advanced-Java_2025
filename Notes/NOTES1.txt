@@ -1,0 +1,106 @@
+✅ SERVLETS
+✅ Servlet Basics
+Servlet runs each request in a separate thread.
+
+Web Container manages the execution of Servlets.
+
+Servlet Lifecycle:
+
+Class is loaded
+
+Instance is created
+
+init(), service(), destroy() methods are called.
+
+✅ Important Classes
+Class	Role
+GenericServlet	Implements Servlet interface; not specific to HTTP
+HttpServlet	Extends GenericServlet & provides service() method for HTTP
+ServletRequest	Interface to read data from client request
+HttpServletRequest	Extension for HTTP-specific request data
+
+✅ JSP (Java Server Pages)
+✅ Directives
+Directive	Purpose	Syntax
+page	Defines page-level settings	<%@ page %>
+include	Includes static resources	<%@ include %>
+❌ export is not a directive		
+
+✅ JSP Tags and Implicit Objects
+JSP tags: <% %>, <%= %>, <%! %>, etc.
+
+Comment in JSP: <%-- comment --%>
+
+Common implicit objects:
+
+request → HttpServletRequest
+
+out → JspWriter
+
+Valid scopes: page, request, session, application
+
+✅ Actions
+<jsp:include /> → Includes another resource
+
+<jsp:setProperty />, <jsp:getProperty />
+
+✅ HTTP Methods
+Method	Description
+GET	Sends data in URL, separated by ?, not secure
+POST	Sends data in body, more secure
+DELETE	Requests resource deletion
+OPTIONS	Lists supported methods for a resource
+GET (True/False)	Not secure because data is visible in URL → False
+
+✅ JDBC (Java Database Connectivity)
+✅ JDBC Driver Types
+Type	Description	Bridge Used
+Type 1	JDBC-ODBC Bridge	Yes
+Type 4	Native-protocol (direct) driver	No (Most efficient)
+
+✅ JDBC Classes and Methods
+Class	Method	Purpose
+DriverManager	getConnection(url)	Establishes DB connection
+PreparedStatement	Supports parameterized queries	Safe from SQL injection
+CallableStatement	Used for calling stored procedures	execute() used
+Statement	For simple SQL execution	
+
+DML Statements: Use executeUpdate()
+
+DDL Statements: Use execute()
+
+Fetching results: ResultSet.next()
+
+Rollback transaction: rollback()
+
+Transfer data: via ResultSet, PreparedStatement, CallableStatement
+
+✅ XML Basics
+XML version declaration: <?xml version="1.0"?>
+
+Namespace declaration: xmlns="namespace_uri"
+
+✅ Spring Boot / REST
+Annotation	Purpose
+@RestController	Marks a class as REST controller
+@SpringBootApplication	Main configuration annotation
+
+✅ Hibernate
+Interface	Role
+Configuration	Used to configure Hibernate
+Session	Represents connection with DB
+Criteria	For querying with conditions
+❌ SessionManagement is NOT a Hibernate core interface	
+
+✅ Criteria API
+Allows condition-based querying
+
+Supports projections, ordering, aggregation
+
+✅ Build and Test Tools
+Tool	Purpose
+Maven	Build automation tool
+JUnit	Testing framework in Java
+
+✅ Hibernate Configuration Files
+File extension: .hbm.xml (Hibernate Mapping File)
