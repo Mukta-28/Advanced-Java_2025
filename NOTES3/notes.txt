@@ -1,0 +1,187 @@
+✅ MOST IMPORTANT TOPICS TO REVISE FROM YOUR DOC:
+🔶 1. 🔥 Spring Boot Annotations to Remember (with Example Use)
+Annotation	Description
+@SpringBootApplication	Combines @Configuration, @EnableAutoConfiguration, @ComponentScan
+@RestController	Combination of @Controller and @ResponseBody for REST APIs
+@RequestMapping / @GetMapping / @PostMapping	To handle web requests
+@Autowired	For Dependency Injection
+@Qualifier("beanName")	To resolve multiple bean injection conflicts
+@Component, @Service, @Repository, @Controller	For stereotype annotations to define layers
+@Scope("prototype")	To define bean scope
+@Configuration	To define Spring config class
+@Bean	To define a method that returns a Spring bean
+@Value("${property}")	To inject values from application.properties
+@Transactional	To enable database transactions (rollback if error)
+@ControllerAdvice	Global exception handler
+@ModelAttribute	To bind form data to model
+@PathVariable / @RequestParam	To map path/URL or query parameters
+@ResponseBody / @RequestBody	To map request/response JSON
+@EnableAutoConfiguration	Auto-configure Spring beans based on classpath
+
+🔶 2. 💡 Spring Boot MCQ You Must Practice (from the shared text)
+Some of the most likely to be asked:
+
+✔ @Autowired, @Inject, @Resource all can be used for DI ✅
+
+✔ ApplicationContext → handles configuration, scanning, injection ✅
+
+✔ @Service → used for business logic layer ✅
+
+✔ @Controller vs @RestController ✅
+
+✔ @ControllerAdvice for exception handling ✅
+
+✔ @Transactional for DB operations ✅
+
+✔ Spring IoC container = Bean Lifecycle Manager ✅
+
+✔ Difference between Bean Definition and Bean Instance ✅
+
+✔ @Scope(“prototype”) vs Singleton ✅
+
+✔ Maven & Gradle for dependency management ✅
+
+✔ @Value reads from application.properties ✅
+
+🔶 3. ✨ Quick Project Ideas from Your List (if viva/project asked)
+Here are easy to explain and scoring ones:
+
+Project	Features You Can Say
+✅ Ecommerce Shopping	Login, product listing, cart, order
+✅ Movie Booking	Search movies, select seat, book ticket
+✅ Hospital System	Patients, doctors, appointments
+✅ Gym Management	Members, plans, billing
+✅ Pizza Delivery	Menu, delivery, online payment
+✅ Crime Reporting	Complaint registration, admin actions
+
+📚 What to Do Now?
+✅ Revise annotations from the list above.
+
+✅ Practice all 30–40 Spring MCQs (you already pasted).
+
+✅ Pick one project for viva (know 5 features, tables, and tech stack).
+
+✅ Keep this link handy for videos:
+➤ All Projects with Videos
+
+📥 Want Summary PDF?
+Let me know and I’ll create a clean PDF version of:
+
+✔ All Spring Annotations
+
+✔ 30+ Spring Boot MCQs with answers
+
+✔ 5 Project descriptions (for viva)
+
+Would you like me to:
+
+📌 Highlight 10 must-do Spring Boot MCQs now?
+
+📌 OR Create the summary PDF first?
+
+Let me know and I’ll get it done asap, so you can rest if needed too. 💪✨
+
+
+
+
+
+
+
+
+You said:
+ scopes in JSP
+
+
+ChatGPT said:
+In JSP (JavaServer Pages), scopes define how long an object is available and where it can be accessed within a web application.
+
+There are 4 types of scopes in JSP:
+
+✅ 1. page scope
+Lifespan: Exists only in the current JSP page (until response is sent).
+
+Accessed via: pageContext object.
+
+Common Use: Temporary variables used only in the current page.
+
+jsp
+Copy
+Edit
+<jsp:useBean id="user" class="com.example.User" scope="page"/>
+🔹 Example:
+jsp
+Copy
+Edit
+<%
+  pageContext.setAttribute("name", "Wagh", PageContext.PAGE_SCOPE);
+%>
+Name: <%= pageContext.getAttribute("name", PageContext.PAGE_SCOPE) %>
+✅ 2. request scope
+Lifespan: Available for one HTTP request (across multiple JSPs via forward/include).
+
+Accessed via: request object.
+
+Common Use: Passing data between pages using RequestDispatcher.
+
+jsp
+Copy
+Edit
+<jsp:useBean id="user" class="com.example.User" scope="request"/>
+🔹 Example:
+jsp
+Copy
+Edit
+<%
+  request.setAttribute("msg", "Hello from request scope");
+%>
+You can access msg in another JSP forwarded to using:
+
+jsp
+Copy
+Edit
+<%= request.getAttribute("msg") %>
+✅ 3. session scope
+Lifespan: Until the user's session is active (timeout/logout).
+
+Accessed via: session object.
+
+Common Use: User login info, shopping cart, etc.
+
+jsp
+Copy
+Edit
+<jsp:useBean id="user" class="com.example.User" scope="session"/>
+🔹 Example:
+jsp
+Copy
+Edit
+<%
+  session.setAttribute("username", "cdacUser");
+%>
+Welcome: <%= session.getAttribute("username") %>
+✅ 4. application scope
+Lifespan: As long as the application (server) is running.
+
+Accessed via: application object (a.k.a ServletContext).
+
+Common Use: Global settings, counters, config values.
+
+jsp
+Copy
+Edit
+<jsp:useBean id="config" class="com.example.Config" scope="application"/>
+🔹 Example:
+jsp
+Copy
+Edit
+<%
+  application.setAttribute("siteName", "CDAC Notes");
+%>
+<%= application.getAttribute("siteName") %>
+🔁 Comparison Table:
+Scope	Object Used	Lifetime	Visible To
+page	pageContext	Only current JSP page	Current JSP only
+request	request	One HTTP request	Forwarded/included pages
+session	session	User session duration	All JSPs in session
+application	application	Application lifecycle	All users & pages
+
