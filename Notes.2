@@ -31,7 +31,6 @@ To cascade  save , update ,delete operations from Category to BlogPost
 Solution : @OneToMany (mappedBy = "chosenCategory",cascade = CascadeType.ALL)
 private List<BlogPost> posts=new ArrayList<>();
 
-
 Regarding orphanRemoval
 
 What is orphanRemoval ?
@@ -84,9 +83,8 @@ Is it recommneded soln : NO (since even if you just want to access one side deta
 Use Case : when the size of many is small 
 eg : User 1----* Role
 OR
-2.
- @OneToMany(mappedBy = "chosenCategory",cascade = CascadeType.ALL)
-	private List<BlogPost> posts=new ArrayList<>();
+2.@OneToMany(mappedBy = "chosenCategory",cascade = CascadeType.ALL)
+private List<BlogPost> posts=new ArrayList<>();
 Solution : Simply access the size of the collection within session scope :  This soln will be applied in DAO layer
 Dis Adv : Hibernate fires multiple queries to get the complete details
 
