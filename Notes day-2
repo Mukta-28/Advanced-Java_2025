@@ -1,6 +1,5 @@
 Day 2
 
-
 Why HttpServlet classs is declared as abstract class BUT with 100 % concrete functionality ?
 
 It is abstract because the implementations of key servicing methods have to be provided by (e.g. overridden by) servlet developer. Since it's abstract , it's instance can't be created.
