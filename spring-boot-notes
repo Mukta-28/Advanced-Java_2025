@@ -3,8 +3,6 @@ OR
  
 What exctaly happens when you run a spring boot app ?
 
-
-
 Spring Boot looks at 
 1. Frameworks available on the run time CLASSPATH(build path) 
 (eg : web MVC , Spring Data JPA : ORM --default provider Hibernate, Jackson , DBCP : Hikari)
