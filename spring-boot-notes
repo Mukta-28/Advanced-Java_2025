@@ -6,6 +6,7 @@ What exctaly happens when you run a spring boot app ?
 Spring Boot looks at 
 1. Frameworks available on the run time CLASSPATH(build path) 
 (eg : web MVC , Spring Data JPA : ORM --default provider Hibernate, Jackson , DBCP : Hikari)
+
 2. Existing configuration for the application(from application.properties or application.yaml file)
 
 Based on these, Spring Boot provides default configuration needed to configure the application with these frameworks. This is called Auto Configuration.
