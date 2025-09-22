@@ -1,4 +1,4 @@
-JDBC: Java Database Connectivity (for understanding any concept we must ask three questions two ourselfes WHAT?, WHY?, HOW?)
+JDBC: Java Database Connectivity (for understanding any concept we must ask three questions two ourselfes WHAT?, WHY?, HOW?) 
 ------------------------------------------------------------
 WHAT:-> 
 ------------------------------------------------------------
