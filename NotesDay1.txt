@@ -1,7 +1,7 @@
 JDBC: Java Database Connectivity (for understanding any concept we must ask three questions two ourselfes WHAT?, WHY?, HOW?) 
 ------------------------------------------------------------
 WHAT:-> 
-------------------------------------------------------------
+------------------------------------------------------------ 
 Definition:
 1) JDBC is an API, which defines several classes and interfaces which can be used for a database communication.
 2) JDBC is an API (packages:java.sql|javax.sql) for connecting to database and perform CRUD operation.
