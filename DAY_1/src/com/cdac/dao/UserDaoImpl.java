@@ -8,6 +8,7 @@ import static com.cdac.utils.DBUtils.*;
 public class UserDaoImpl implements UserDao {
 	// dependency - DB connection - DBUtils
 	private Connection connection;
+
 	private PreparedStatement pst1;
 
 	// def ctor - will be invoked by layer above - Tester (dyn web comp)
@@ -49,3 +50,4 @@ public class UserDaoImpl implements UserDao {
 	}
 
 }
+
